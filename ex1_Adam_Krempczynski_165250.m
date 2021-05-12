@@ -1,4 +1,4 @@
-N = 1000;
+N = 100;
 mean = 2;
 variance = 2;
 
