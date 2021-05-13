@@ -1,3 +1,4 @@
+clear;
 % Cauchy random variable can be generated as a ratio of two normally distribuited random variables
 mean = 2;
 variance = 1;

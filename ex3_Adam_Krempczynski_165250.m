@@ -1,3 +1,4 @@
+clear;
 % Samples Number
 N_list = [100, 1000, 10000, 100000];
 mean = 2;
