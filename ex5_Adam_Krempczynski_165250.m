@@ -1,43 +1,5 @@
 clear;
-% ******************************************************************************
-% Functions
-% ******************************************************************************
-function samples = generateA(no_samples)
-  a = -1; % left side of pdf
-  b = 2;  % right side of pdf
-  max_val = 0.5;
-  samples = zeros(no_samples, 1);
-  
-  samples_ctr = 1;
-  while samples_ctr <= no_samples
-    x = a + (b-a) * rand(1,1);
-    y = max_val * rand(1,1);
-    
-    if (x <= 0 && y <=0.5) || (x > 0 && y <= 0.25)
-      samples(samples_ctr) = x;
-      samples_ctr = samples_ctr + 1;
-    endif
-  endwhile
-endfunction
-
-function samples = generateB(no_samples)
-  a = -1; % left side of pdf
-  b = 1;  % right side of pdf
-  max_val = 1;
-  samples = zeros(no_samples, 1);
-  
-  samples_ctr = 1;
-  while samples_ctr <= no_samples
-    x = a + (b-a) * rand(1,1);
-    y = max_val * rand(1,1);
-    if (x <= 0 && y <= x*(-1)) || (x > 0 && y <= 0.5)
-      samples(samples_ctr) = x;
-      samples_ctr = samples_ctr + 1;
-    endif
-  endwhile
-endfunction
-
-N = 10000;
+N = 100000;
 
 % Generate A
 samplesA = generateA(N);
@@ -71,3 +33,52 @@ fprintf("\tMean=%f, Median=%f, Standard Deviation=%f\n", mean_B, median_B, std_d
 fprintf("Real values:\n");
 fprintf("\tMean=%f, Median=%f, Standard Deviation=%f\n", mean_B_real, median_B_real, std_dev_B_real);
 
+subplot(2,1,2)
+h = hist(samplesB, 10);
+h = h/sum(h);
+bar(-0.9:0.2:1, h, 1.0);
+title("Histogram PDF B")
+
+subplot(2,1,1)
+h = hist(samplesA, 3);
+h = h/sum(h);
+bar(-0.5:1:1.5, h, 1.0)
+title("Histogram PDF A")
+
+% ******************************************************************************
+% Functions
+% ******************************************************************************
+function samples = generateA(no_samples)
+  a = -1; % left side of pdf
+  b = 2;  % right side of pdf
+  max_val = 0.5;
+  samples = zeros(no_samples, 1);
+  
+  samples_ctr = 1;
+  while samples_ctr <= no_samples
+    x = a + (b-a) * rand(1,1);
+    y = max_val * rand(1,1);
+    
+    if (x <= 0 && y <=0.5) || (x > 0 && y <= 0.25)
+      samples(samples_ctr) = x;
+      samples_ctr = samples_ctr + 1;
+    end
+  end
+end
+
+function samples = generateB(no_samples)
+  a = -1; % left side of pdf
+  b = 1;  % right side of pdf
+  max_val = 1;
+  samples = zeros(no_samples, 1);
+  
+  samples_ctr = 1;
+  while samples_ctr <= no_samples
+    x = a + (b-a) * rand(1,1);
+    y = max_val * rand(1,1);
+    if (x <= 0 && y <= x*(-1)) || (x > 0 && y <= 0.5)
+      samples(samples_ctr) = x;
+      samples_ctr = samples_ctr + 1;
+    end
+  end
+end

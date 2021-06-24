@@ -1,5 +1,5 @@
 clear;
-N = 10000;
+N = 1000000;
 mean = 2;
 
 % Generate C - Laplace variable
@@ -11,9 +11,9 @@ laplace_vars = mean - b*sign(uni_vars).*log(1-2*abs(uni_vars));
 variance = 1;
 std_dev = sqrt(variance);
 
-X = mean + std_dev*randn(N,1);
-Y = mean + std_dev*randn(N,1);
-cauchy_vars = X ./ Y;
+X = std_dev*(randn(N,1));
+Y = std_dev*(randn(N,1));
+cauchy_vars = mean + X ./ Y;
 
 % Histograms
 x_axis = -2.5:0.5:7;
@@ -22,6 +22,8 @@ c_hist = hist(laplace_vars, 20);
 c_hist = c_hist/sum(c_hist);
 
 %% D variable histogram
+cauchy_vars = cauchy_vars(cauchy_vars <= 7);
+cauchy_vars = cauchy_vars(cauchy_vars >= -3);
 d_hist = hist(cauchy_vars, 20);
 d_hist = d_hist/sum(d_hist);
 
@@ -41,11 +43,11 @@ cauchy_pdf = b/pi ./ (b^2 + (x-a).^2);
 subplot(2,1,1);
 plot(x, laplace_pdf);
 hold on;
-bar(x_axis, c_hist);
+bar(x_axis, c_hist, 1.0);
 hold off;
 
 subplot(2,1,2);
 plot(x, cauchy_pdf);
 hold on;
-bar(x_axis, d_hist);
+bar(x_axis, d_hist, 1.0);
 hold off;

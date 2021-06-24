@@ -1,5 +1,5 @@
 clear;
-N = 100;
+N = 1000;
 mean = 2;
 variance = 2;
 
@@ -11,6 +11,8 @@ uniform_vars = a + (b - a) .* rand(N, 1);
 subplot(3,1,1);
 plot(uniform_vars);
 ylim([-3, 7]);
+xlabel("Sample")
+ylabel("Y")
 title("Uniform PDF");
 
 % B gaussian PDF
@@ -20,6 +22,8 @@ subplot(3,1,2);
 plot(gaussian_vars);
 ylim([-3, 7]);
 title("Gaussian/Normal PDF");
+xlabel("Sample")
+ylabel("Y")
 
 % C Laplace PDF
 % Laplace PDF characterized by mean and b where variance is equal to 2b^2
@@ -31,4 +35,7 @@ subplot(3,1,3);
 plot(laplace_vars);
 ylim([-3, 7]);
 title("Laplace PDF");
+xlabel("Sample")
+ylabel("Y")
+
 

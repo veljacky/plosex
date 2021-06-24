@@ -1,39 +1,4 @@
 clear;
-function samples = generateA(no_samples)
-  a = -1; % left side of pdf
-  b = 2;  % right side of pdf
-  max_val = 0.5;
-  samples = zeros(no_samples, 1);
-  
-  samples_ctr = 1;
-  while samples_ctr <= no_samples
-    x = a + (b-a) * rand(1,1);
-    y = max_val * rand(1,1);
-    
-    if (x <= 0 && y <=0.5) || (x > 0 && y <= 0.25)
-      samples(samples_ctr) = x;
-      samples_ctr = samples_ctr + 1;
-    endif
-  endwhile
-endfunction
-
-function samples = generateB(no_samples)
-  a = -1; % left side of pdf
-  b = 1;  % right side of pdf
-  max_val = 1;
-  samples = zeros(no_samples, 1);
-  
-  samples_ctr = 1;
-  while samples_ctr <= no_samples
-    x = a + (b-a) * rand(1,1);
-    y = max_val * rand(1,1);
-    if (x <= 0 && y <= x*(-1)) || (x > 0 && y <= 0.5)
-      samples(samples_ctr) = x;
-      samples_ctr = samples_ctr + 1;
-    endif
-  endwhile
-endfunction
-
 N = 10000;
 R = 16;
 
@@ -51,7 +16,7 @@ F_hist = hist(F, 20);
 F_hist = F_hist/sum(F_hist);
 
 x = -5:0.001:5;
-std_dev = 2.5;
+std_dev = 1;
 mean = 0;
 gaussian_vars = 1/(std_dev *sqrt(2*pi)) * exp(-1* (x-mean).^2/(2*std_dev^2));
 
@@ -60,7 +25,7 @@ x_axis = -4.5:0.5:5;
 subplot(2,1,1)
 bar(x_axis, F_hist, 1.0);
 hold on;
-plot(x, gaussian_vars);
+plot(x, (1/2.75)*gaussian_vars);
 title("Ex. 5 PDF A");
 hold off;
 
@@ -81,6 +46,41 @@ F2_hist = F2_hist/sum(F2_hist);
 subplot(2,1,2)
 bar(x_axis, F2_hist, 1.0);
 hold on;
-plot(x, gaussian_vars);
+plot(x, (1/2.666)*gaussian_vars);
 hold off;
 title("Ex. 5 PDF B");
+
+function samples = generateA(no_samples)
+  a = -1; % left side of pdf
+  b = 2;  % right side of pdf
+  max_val = 0.5;
+  samples = zeros(no_samples, 1);
+  
+  samples_ctr = 1;
+    while samples_ctr <= no_samples
+        x = a + (b-a) * rand(1,1);
+        y = max_val * rand(1,1);
+
+        if (x <= 0 && y <=0.5) || (x > 0 && y <= 0.25)
+          samples(samples_ctr) = x;
+          samples_ctr = samples_ctr + 1;
+        end
+    end
+end
+
+function samples = generateB(no_samples)
+  a = -1; % left side of pdf
+  b = 1;  % right side of pdf
+  max_val = 1;
+  samples = zeros(no_samples, 1);
+  
+  samples_ctr = 1;
+  while samples_ctr <= no_samples
+    x = a + (b-a) * rand(1,1);
+    y = max_val * rand(1,1);
+    if (x <= 0 && y <= x*(-1)) || (x > 0 && y <= 0.5)
+      samples(samples_ctr) = x;
+      samples_ctr = samples_ctr + 1;
+    end
+  end
+end
